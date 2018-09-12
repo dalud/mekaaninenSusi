@@ -16,7 +16,7 @@ const int LKM = 10; //nivelten lukumäärä
 //ja laitetaan ne taulukkoon
 int nivelet[LKM] = {EOY, EOA, EVY, EVA, TOY, TOK, TOA, TVY, TVK, TVA};
 
-//ajoitukset eri nivelille. kauanko ko pumpulla kestää siirtyä asennosta toiseen.
+//ajoitukset eri nivelille. Kauanko ko. pumpulla kestää siirtyä asennosta toiseen?
 //Onko asennosta palautumisaika vakio? Vai jäävätkö "löysiksi"?
 const int dY = 1000; //delay Ylänivel
 const int dK = 1000; //dKeski
