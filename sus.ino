@@ -4,9 +4,9 @@
 #define EVY 3 //EtuVasen...
 #define EVA 4
 
-#define TOY 5 //TakaVasenYlä
-#define TOK 6 //TakaVasenKeski
-#define TOA 7 //TakaVasenAlanivel
+#define TOY 5 //TakaOikeaYlä
+#define TOK 6 //TakaOikeaKeski
+#define TOA 7 //TakaOikeaAlanivel
 #define TVY 8 //TakaVasen...
 #define TVK 9
 #define TVA 10
