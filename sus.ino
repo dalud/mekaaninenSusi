@@ -19,9 +19,11 @@ int nivelet[LKM] = {EOY, EOK, EVY, EVK, TOY, TOK, TOA, TVY, TVK, TVA};
 //ajoitukset eri nivelille. Kauanko ko. pumpulla kestää siirtyä asennosta toiseen?
 //Onko asennosta palautumisaika vakio? Vai jäävätkö "löysiksi"?
 //Kutsutaan ENNEN ko. niveltä
-const int dY = 1000; //delayYlänivel
-const int dK = 1000; //delayKeski
-const int dA = 1250; //dAla
+const int speed = 1;
+
+const int dY = 1000/speed; //delayYlänivel
+const int dK = 1000/speed; //delayKeski
+const int dA = 1250/speed; //dAla
 
 void setup() {
   //konfiguriodaan kaikki nivelet OUTPUTeiksi
