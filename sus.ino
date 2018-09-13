@@ -24,7 +24,7 @@ const int dK = 1000; //delayKeski
 const int dA = 1250; //dAla
 
 void setup() {
-  //konfiguriodaan kaikki nivelet OUTPUTeiksi
+  //konfiguroidaan kaikki nivelet OUTPUTeiksi
   for(int i=0; i<LKM; i++){
     pinMode(nivelet[i], OUTPUT);
   }  
