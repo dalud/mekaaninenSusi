@@ -24,7 +24,7 @@ const int dK = 1000; //delayKeski
 const int dA = 1250; //dAla
 
 void setup() {
-  //konfiguroidaan kaikki nivelet OUTPUTeiksi
+  //konfiguriodaan kaikki nivelet OUTPUTeiksi
   for(int i=0; i<LKM; i++){
     pinMode(nivelet[i], OUTPUT);
   }  
@@ -33,7 +33,6 @@ void setup() {
 void etu(char puoli){
   switch(puoli){
     case 'O':
-      delay(dK);
       digitalWrite(EOK, HIGH);
       delay(dY);
       digitalWrite(EOY, HIGH);
@@ -43,7 +42,6 @@ void etu(char puoli){
       digitalWrite(EOY, LOW);
       break;
     case 'V':
-      delay(dK);
       digitalWrite(EVK, HIGH);
       delay(dY);
       digitalWrite(EVY, HIGH);
@@ -58,7 +56,6 @@ void etu(char puoli){
 void taka(char puoli){
   switch(puoli){
     case 'O':
-      delay(dY);
       digitalWrite(TOY, HIGH);
       delay(dK);
       digitalWrite(TOK, HIGH);
@@ -68,11 +65,9 @@ void taka(char puoli){
       digitalWrite(TOA, HIGH);
       delay(dK);
       digitalWrite(TOK, LOW);
-      delay(dA);
       digitalWrite(TOA, LOW);
       break;
     case 'V':
-      delay(dY);
       digitalWrite(TVY, HIGH);
       delay(dK);
       digitalWrite(TVK, HIGH);
@@ -82,7 +77,6 @@ void taka(char puoli){
       digitalWrite(TVA, HIGH);
       delay(dK);
       digitalWrite(TVK, LOW);
-      delay(dA);
       digitalWrite(TVA, LOW);
       break;
   }
