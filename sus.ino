@@ -11,13 +11,14 @@
 #define TVK 8
 #define TVA 9
 
-const int LKM = 10; //nivelten lukumäärä
+#define NISKA 10
+
+const int LKM = 11; //nivelten lukumäärä
 
 //ja laitetaan ne taulukkoon
-int nivelet[LKM] = {EOY, EOK, EVY, EVK, TOY, TOK, TOA, TVY, TVK, TVA};
+int nivelet[LKM] = {EOY, EOK, EVY, EVK, TOY, TOK, TOA, TVY, TVK, TVA, NISKA};
 
 //ajoitukset eri nivelille. Kauanko ko. pumpulla kestää siirtyä asennosta toiseen?
-//Onko asennosta palautumisaika vakio? Vai jäävätkö "löysiksi"?
 //Kutsutaan ENNEN ko. niveltä
 const int speed = 1;
 
