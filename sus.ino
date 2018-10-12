@@ -1,12 +1,12 @@
 //määritellään pinnit raajojen niveliin
 #define EOY 0 //EtuOikeaYlänivel
 #define EOK 1 //EtuOikeaKeski
-#define EVY 2 //EtuVasen...
-#define EVK 3
+#define EVY 99 //EtuVasen...
+#define EVK 98
 
-#define TOY 4 //TakaOikeaYlä
-#define TOK 5 //TakaOikeaKeski
-#define TOA 6 //TakaOikeaAlanivel
+#define TOY 2 //TakaOikeaYlä
+#define TOK 3 //TakaOikeaKeski
+#define TOA 4 //TakaOikeaAlanivel
 #define TVY 7 //TakaVasen...
 #define TVK 8
 #define TVA 9
@@ -18,40 +18,43 @@ const int LKM = 11; //nivelten lukumäärä
 //ja laitetaan ne taulukkoon
 int nivelet[LKM] = {EOY, EOK, EVY, EVK, TOY, TOK, TOA, TVY, TVK, TVA, NISKA};
 
-//ajoitukset eri nivelille. Kauanko ko. pumpulla kestää siirtyä asennosta toiseen?
-//Kutsutaan ENNEN ko. niveltä
-const int speed = 1;
+const int speed = 2.5;
 
-const int dY = 1000/speed; //delayYlänivel
-const int dK = 1000/speed; //delayKeski
-const int dA = 1250/speed; //dAla
+void alkupose(){
+  digitalWrite(TOY, HIGH);
+  digitalWrite(TOK, HIGH);
+}
 
 void setup() {
   //konfiguriodaan kaikki nivelet OUTPUTeiksi
   for(int i=0; i<LKM; i++){
     pinMode(nivelet[i], OUTPUT);
+    alkupose();
   }  
 }
+
 //alirutiinit raajoille
 void etu(char puoli){
   switch(puoli){
     case 'O':
       digitalWrite(EOK, HIGH);
-      delay(dY);
+      delay(1000/speed);
       digitalWrite(EOY, HIGH);
-      delay(dK);
+      delay(1000/speed);
       digitalWrite(EOK, LOW);
-      delay(dY);
+      delay(1500/speed);
       digitalWrite(EOY, LOW);
+      delay(2000/speed);
       break;
     case 'V':
       digitalWrite(EVK, HIGH);
-      delay(dY);
+      delay(1000/speed);
       digitalWrite(EVY, HIGH);
-      delay(dK);
+      delay(1000/speed);
       digitalWrite(EVK, LOW);
-      delay(dY);
+      delay(1500/speed);
       digitalWrite(EVY, LOW);
+      delay(2000/speed);
       break;
   }
 }
@@ -59,38 +62,43 @@ void etu(char puoli){
 void taka(char puoli){
   switch(puoli){
     case 'O':
-      digitalWrite(TOY, HIGH);
-      delay(dK);
-      digitalWrite(TOK, HIGH);
-      delay(dY);
-      digitalWrite(TOY, LOW);
-      delay(dA);
-      digitalWrite(TOA, HIGH);
-      delay(dK);
       digitalWrite(TOK, LOW);
+      delay(1000/speed);
+      digitalWrite(TOA, HIGH);
+      delay(500/speed);
+      digitalWrite(TOY, LOW);
+      delay(2000/speed);
       digitalWrite(TOA, LOW);
+      //delay(1500/speed);
+      digitalWrite(TOK, HIGH);
+      delay(1500/speed);
+      digitalWrite(TOY, HIGH);
+      delay(2000/speed);
       break;
+    
     case 'V':
-      digitalWrite(TVY, HIGH);
-      delay(dK);
-      digitalWrite(TVK, HIGH);
-      delay(dY);
-      digitalWrite(TVY, LOW);
-      delay(dA);
-      digitalWrite(TVA, HIGH);
-      delay(dK);
       digitalWrite(TVK, LOW);
+      delay(1000/speed);
+      digitalWrite(TVA, HIGH);
+      delay(500/speed);
+      digitalWrite(TVY, LOW);
+      delay(2000/speed);
       digitalWrite(TVA, LOW);
+      //delay(1500/speed);
+      digitalWrite(TVK, HIGH);
+      delay(1500/speed);
+      digitalWrite(TVY, HIGH);
+      delay(2000/speed);
       break;
   }
 }
 
 //kävelysykli
 void kavely(){
-  etu('V');
+  //etu('V');
   taka('O');
   etu('O');
-  taka('V');
+ //taka('V');
 }
 
 void loop() {
