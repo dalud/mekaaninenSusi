@@ -15,7 +15,7 @@
 #define VL 17
 
 #define NN 15 //Niska nostaja
-#define NK 16 //niskan kääntäjä
+#define NK 16 //niskan kääntäjä HIGH = vasemmalle, LOW = oikealle
 
 const int LKM = 14; //nivelten lukumäärä
 
@@ -87,7 +87,7 @@ void etu(char puoli){
   digitalWrite(EK, LOW);
   delay(1500/speed);
   digitalWrite(EY, LOW);
-  delay(5000/speed);      
+  delay(1000/speed);      
 }
 
 void taka(char puoli){
@@ -115,7 +115,7 @@ void taka(char puoli){
   digitalWrite(TK, HIGH);
   delay(1500/speed);
   digitalWrite(TY, HIGH);
-  delay(5000/speed);      
+  delay(1000/speed);      
 }
 
 //etujalan pakki
@@ -170,9 +170,12 @@ void takaPakki(char puoli){
 
 //kävelysykli
 void kavely(){
+  digitalWrite(NK, LOW);
   etu('V');
+  digitalWrite(NK, HIGH);
   taka('O');
   etu('O');
+  digitalWrite(NK, LOW);
   taka('V');
 }
 
@@ -213,6 +216,6 @@ long measureDist(char eye){
 }
 
 void loop() {
-    if(measureDist('E') < 10) kavely();
-    else alkupose();
+    if(measureDist('E') < 10) alkupose();
+    else kavely();
 }
