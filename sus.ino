@@ -35,7 +35,8 @@ long duration;
 const int speed = 2.5;
 
 void alkupose(){
-  digitalWrite(NN, HIGH);
+  digitalWrite(NN, LOW);
+  digitalWrite(NK, HIGH);
   
   digitalWrite(EOY, LOW);
   digitalWrite(EOK, LOW);
@@ -81,13 +82,13 @@ void etu(char puoli){
       break;
   }
   digitalWrite(EK, HIGH);
-  delay(1000/speed);
+  delay(300/speed);
   digitalWrite(EY, HIGH);
-  delay(1000/speed);
+  delay(300/speed);
   digitalWrite(EK, LOW);
-  delay(1500/speed);
-  digitalWrite(EY, LOW);
-  delay(1000/speed);      
+  delay(300/speed);
+  //digitalWrite(EY, LOW);
+  //delay(6000/speed);      
 }
 
 void taka(char puoli){
@@ -105,17 +106,37 @@ void taka(char puoli){
       break;
   }
   digitalWrite(TK, LOW);
-  delay(1000/speed);
+  delay(100/speed);
   digitalWrite(TA, HIGH);
-  delay(500/speed);
+  delay(100/speed);
   digitalWrite(TY, LOW);
-  delay(3000/speed);
+  delay(600/speed);
   digitalWrite(TA, LOW);
   //delay(1500/speed);
   digitalWrite(TK, HIGH);
-  delay(1500/speed);
+  delay(200/speed);
   digitalWrite(TY, HIGH);
-  delay(1000/speed);      
+  //delay(4000/speed);      
+}
+
+void veto(){
+  digitalWrite(EOY, LOW);
+  digitalWrite(EVY, LOW);
+  //digitalWrite(TOY, HIGH);
+  //digitalWrite(TVY, HIGH);
+  delay(4000/speed);
+}
+
+//kävelysykli
+void kavely(){
+  digitalWrite(NK, LOW);
+  etu('V');
+  digitalWrite(NK, HIGH);
+  taka('O');
+  etu('O');
+  digitalWrite(NK, LOW);
+  taka('V');
+  veto();
 }
 
 //etujalan pakki
@@ -168,17 +189,6 @@ void takaPakki(char puoli){
   delay(2000/speed);
 }
 
-//kävelysykli
-void kavely(){
-  digitalWrite(NK, LOW);
-  etu('V');
-  digitalWrite(NK, HIGH);
-  taka('O');
-  etu('O');
-  digitalWrite(NK, LOW);
-  taka('V');
-}
-
 void pakitus(){
   etuPakki('O');
   takaPakki('O');
@@ -217,5 +227,6 @@ long measureDist(char eye){
 
 void loop() {
     if(measureDist('E') < 10) alkupose();
-    else kavely();
+    else //kavely();
+    alkupose();
 }
