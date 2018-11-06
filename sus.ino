@@ -70,7 +70,7 @@ void setup() {
 //alirutiinit raajoille
 int EY, EK, TY, TK, TA;
 
-void etu(char puoli){
+void etu1(char puoli){
   switch(puoli){
     case 'O':
       EY = EOY;
@@ -84,14 +84,34 @@ void etu(char puoli){
   digitalWrite(EK, HIGH);
   delay(300/speed);
   digitalWrite(EY, HIGH);
-  delay(300/speed);
+  delay(100/speed);
   digitalWrite(EK, LOW);
-  delay(300/speed);
-  digitalWrite(EY, LOW);
-  delay(1000/speed);      
+  //delay(300/speed);
+  //digitalWrite(EY, LOW);
+  //delay(1000/speed);      
 }
 
-void taka(char puoli){
+void etu2(char puoli){
+  switch(puoli){
+    case 'O':
+      EY = EOY;
+      EK = EOK;
+      break;
+    case 'V':
+      EY = EVY;
+      EK = EVK;
+      break;
+  }
+  //digitalWrite(EK, HIGH);
+  //delay(300/speed);
+  //digitalWrite(EY, HIGH);
+  //delay(300/speed);
+  //digitalWrite(EK, LOW);
+  delay(300/speed);
+  digitalWrite(EY, LOW);
+  //delay(1000/speed);      
+}
+void taka1(char puoli){
   switch(puoli){
     case 'O':
       TY = TOY;
@@ -114,9 +134,70 @@ void taka(char puoli){
   digitalWrite(TA, LOW);
   //delay(1500/speed);
   digitalWrite(TK, HIGH);
+  //delay(200/speed);
+  //digitalWrite(TY, HIGH);
+  //delay(1000/speed);      
+}
+
+void taka2(char puoli){
+  switch(puoli){
+    case 'O':
+      TY = TOY;
+      TK = TOK;
+      TA = TOA;
+      break;
+    
+    case 'V':
+      TY = TVY;
+      TK = TVK;
+      TA = TVA;
+      break;
+  }
+  //digitalWrite(TK, LOW);
+  //delay(500/speed);
+  //digitalWrite(TA, HIGH);
+  //delay(100/speed);
+  //digitalWrite(TY, LOW);
+  //delay(600/speed);
+  //digitalWrite(TA, LOW);
+  //delay(1500/speed);
+  //digitalWrite(TK, HIGH);
   delay(200/speed);
   digitalWrite(TY, HIGH);
-  delay(1000/speed);      
+  //delay(1000/speed);      
+}
+
+void dippaus(char puoli){
+    switch(puoli){
+      case 'O':
+        TK = TVK;
+        EK = EOK;
+        break;
+      case 'V':
+        TK = TOK;
+        EK = EVK;
+        break;
+     }
+     digitalWrite(TK, LOW);
+     digitalWrite(EK, HIGH);
+}
+
+//kävelysykli
+void kavely(){
+  digitalWrite(NK, LOW);
+  delay(1000/speed);
+  etu1('V');  
+  taka1('O');
+  dippaus('O');
+  etu2('V');
+  taka2('O');
+  digitalWrite(NK, HIGH);
+  delay(1000/speed);
+  etu1('O');
+  taka1('V');
+  dippaus('V');
+  etu2('O');
+  taka2('V');
 }
 
 void veto(){
@@ -125,16 +206,6 @@ void veto(){
   //digitalWrite(TOY, HIGH);
   //digitalWrite(TVY, HIGH);
   delay(6000/speed);
-}
-
-//kävelysykli
-void kavely(){
-  taka('O');
-  digitalWrite(NK, LOW);
-  etu('V');
-  taka('V');
-  digitalWrite(NK, HIGH);
-  etu('O');
 }
 
 //etujalan pakki
