@@ -23,19 +23,19 @@ const int LKM = 14; //nivelten lukumäärä
 int nivelet[LKM] = {EOY, EOK, EVY, EVK, TOY, TOK, TOA, TVY, TVK, TVA, OL, VL, NN, NK};
 
 //ultrasonic Pakki
-#define pTrigPin 99
-#define pEchoPin 98
-
 //Etu
-#define eTrigPin 52
-#define eEchoPin 53
+#define oeTrigPin 52  //OikeaEtuSilmä
+#define oeEchoPin 53
+
+#define veTrigPin 44  //VasenEtu
+#define veEchoPin 45
 
 long duration;
 
 const int speed = 2.5;
 
 void alkupose(){
-  digitalWrite(NN, LOW);
+  digitalWrite(NN, HIGH);
   digitalWrite(NK, LOW);
   
   digitalWrite(EOY, LOW);
@@ -61,16 +61,16 @@ void setup() {
   for(int i=0; i<LKM; i++) pinMode(nivelet[i], OUTPUT);    
   alkupose();
 
-  pinMode(eTrigPin, OUTPUT);
-  pinMode(eEchoPin, INPUT);
-  pinMode(pTrigPin, OUTPUT);
-  pinMode(pEchoPin, INPUT);
+  pinMode(oeTrigPin, OUTPUT);
+  pinMode(oeEchoPin, INPUT);
+  pinMode(veTrigPin, OUTPUT);
+  pinMode(veEchoPin, INPUT);
 }
 
 //alirutiinit raajoille
 int EY, EK, TY, TK, TA;
 
-void etu1(char puoli){
+void etu(char puoli){
   switch(puoli){
     case 'O':
       EY = EOY;
@@ -84,34 +84,14 @@ void etu1(char puoli){
   digitalWrite(EK, HIGH);
   delay(300/speed);
   digitalWrite(EY, HIGH);
-  delay(100/speed);
+  delay(300/speed);
   digitalWrite(EK, LOW);
-  //delay(300/speed);
-  //digitalWrite(EY, LOW);
-  //delay(1000/speed);      
-}
-
-void etu2(char puoli){
-  switch(puoli){
-    case 'O':
-      EY = EOY;
-      EK = EOK;
-      break;
-    case 'V':
-      EY = EVY;
-      EK = EVK;
-      break;
-  }
-  //digitalWrite(EK, HIGH);
-  //delay(300/speed);
-  //digitalWrite(EY, HIGH);
-  //delay(300/speed);
-  //digitalWrite(EK, LOW);
   delay(300/speed);
   digitalWrite(EY, LOW);
-  //delay(1000/speed);      
+  delay(1000/speed);      
 }
-void taka1(char puoli){
+
+void taka(char puoli){
   switch(puoli){
     case 'O':
       TY = TOY;
@@ -134,78 +114,20 @@ void taka1(char puoli){
   digitalWrite(TA, LOW);
   //delay(1500/speed);
   digitalWrite(TK, HIGH);
-  //delay(200/speed);
-  //digitalWrite(TY, HIGH);
-  //delay(1000/speed);      
-}
-
-void taka2(char puoli){
-  switch(puoli){
-    case 'O':
-      TY = TOY;
-      TK = TOK;
-      TA = TOA;
-      break;
-    
-    case 'V':
-      TY = TVY;
-      TK = TVK;
-      TA = TVA;
-      break;
-  }
-  //digitalWrite(TK, LOW);
-  //delay(500/speed);
-  //digitalWrite(TA, HIGH);
-  //delay(100/speed);
-  //digitalWrite(TY, LOW);
-  //delay(600/speed);
-  //digitalWrite(TA, LOW);
-  //delay(1500/speed);
-  //digitalWrite(TK, HIGH);
   delay(200/speed);
   digitalWrite(TY, HIGH);
-  //delay(1000/speed);      
-}
-
-void dippaus(char puoli){
-    switch(puoli){
-      case 'O':
-        TK = TVK;
-        EK = EOK;
-        break;
-      case 'V':
-        TK = TOK;
-        EK = EVK;
-        break;
-     }
-     digitalWrite(TK, LOW);
-     digitalWrite(EK, HIGH);
+  delay(1000/speed);      
 }
 
 //kävelysykli
 void kavely(){
-  digitalWrite(NK, LOW);
-  delay(1000/speed);
-  etu1('V');  
-  taka1('O');
-  dippaus('O');
-  etu2('V');
-  taka2('O');
+  digitalWrite(NN, HIGH);
   digitalWrite(NK, HIGH);
-  delay(1000/speed);
-  etu1('O');
-  taka1('V');
-  dippaus('V');
-  etu2('O');
-  taka2('V');
-}
-
-void veto(){
-  digitalWrite(EOY, LOW);
-  digitalWrite(EVY, LOW);
-  //digitalWrite(TOY, HIGH);
-  //digitalWrite(TVY, HIGH);
-  delay(6000/speed);
+  etu('V');  
+  taka('O');
+  digitalWrite(NK, LOW);
+  etu('O');
+  taka('V');
 }
 
 //etujalan pakki
@@ -222,12 +144,12 @@ void etuPakki(char puoli){
       break;
   }  
   digitalWrite(EY, HIGH);
-  delay(2000/speed);
+  delay(1000/speed);
   digitalWrite(EK, HIGH);
   digitalWrite(EY, LOW);
-  delay(2000/speed);
+  delay(1000/speed);
   digitalWrite(EK, LOW);
-  delay(2000/speed);
+  delay(1000/speed);
 }
 
 void takaPakki(char puoli){
@@ -245,46 +167,123 @@ void takaPakki(char puoli){
       break;    
   } 
   digitalWrite(TY, LOW);
-  delay(2000/speed);
+  delay(1000/speed);
   digitalWrite(TK, LOW);
   //delay(2000/speed);
   digitalWrite(TA, HIGH);
-  delay(2000/speed);
+  delay(1000/speed);
   digitalWrite(TY, HIGH);
-  delay(2000/speed);
+  delay(1000/speed);
   digitalWrite(TA, LOW);
   //delay(2000/speed);
   digitalWrite(TK, HIGH);
-  delay(2000/speed);
+  delay(1000/speed);
 }
 
 void pakitus(){
+  digitalWrite(NN, LOW);
+  digitalWrite(NK, HIGH);
   etuPakki('O');
+  takaPakki('V');
+  etuPakki('V');
   takaPakki('O');
 }
 
-void etuNosto(){
-  digitalWrite(EOK, LOW);
-  digitalWrite(EVK, LOW);
+void kumarrus(){
+  digitalWrite(EOK, HIGH);
+  digitalWrite(EVK, HIGH);
+  delay(1000);
   digitalWrite(EOY, HIGH);
   digitalWrite(EVY, HIGH);
+  delay(1000);
+}
+
+void istuminen(){
+  digitalWrite(TOY, LOW);
+  digitalWrite(TVY, LOW);
+  digitalWrite(TOK, LOW);
+  digitalWrite(TVK, LOW);
+  digitalWrite(TOA, HIGH);
+  digitalWrite(TVA, HIGH);
+}
+
+void ponnistus(){
+  digitalWrite(TOY, HIGH);
+  digitalWrite(TVY, HIGH);
+  digitalWrite(TOK, HIGH);
+  digitalWrite(TVK, HIGH);
+  digitalWrite(TOA, LOW);
+  digitalWrite(TVA, LOW);
+}
+
+void kuPo(){          //kumarrus ja ponnistus
+      istuminen();
+      kumarrus();
+      ponnistus();
+}
+
+void haistelu(){
+  kumarrus();
+  digitalWrite(NN, HIGH);
+  delay(1000);
+  digitalWrite(NK, HIGH);
+  delay(1000);
+  digitalWrite(NK, LOW);
+  delay(2000);
+  digitalWrite(NN, LOW);
+  delay(2000);
+}
+
+void kaannos(char puoli){
+  switch(puoli){
+    case 'O':
+      digitalWrite(NK, LOW);
+      digitalWrite(EOK, HIGH);
+      digitalWrite(OL, HIGH);
+      digitalWrite(VL, HIGH);
+      delay(1000);
+      digitalWrite(EOK, LOW);
+      delay(1000);
+      taka('V');
+      digitalWrite(EVK, HIGH);
+      digitalWrite(OL, LOW);
+      digitalWrite(VL, LOW);
+      delay(1000);
+      digitalWrite(EVK, LOW);
+      delay(1000);
+      break;
+    case 'V':
+      digitalWrite(NK, HIGH);
+      digitalWrite(EVK, HIGH);
+      digitalWrite(VL, HIGH);
+      digitalWrite(OL, HIGH);
+      delay(1000);
+      digitalWrite(EVK, LOW);
+      delay(1000);
+      taka('O');
+      digitalWrite(EOK, HIGH);
+      digitalWrite(VL, LOW);
+      digitalWrite(OL, LOW);
+      delay(1000);
+      digitalWrite(EOK, LOW);
+      delay(1000);
+      break;
+  }  
 }
 
 //silmien etäisyysnäkö
 int trig, echo;
 
-long measureDist(char eye){
-  switch(eye){
-    case 'E':
-      trig = eTrigPin;
-      echo = eEchoPin;
-      break;
-
-    case 'P':
-      trig = pTrigPin;
-      echo = pEchoPin;
-      break;
-  }  
+long measureDist(String eye){
+  
+  if(eye == "oe"){
+    trig = oeTrigPin;
+    echo = oeEchoPin;
+  }else if(eye == "ve"){
+    trig = veTrigPin;
+    echo = veEchoPin;
+  }
+   
   digitalWrite(trig, LOW); 
   delayMicroseconds(2);
   digitalWrite(trig, HIGH);
@@ -294,8 +293,55 @@ long measureDist(char eye){
   return duration*0.034/2;  //cm
 }
 
+void randomi(){
+  int roll abs(random(10));
+
+  switch(roll){
+    case 1:
+      kavely();
+      kavely();
+      kavely();
+      break;
+    case 2:
+      pakitus();
+      break;
+    case 3:
+      kumarrus();
+      break;
+    case 4:
+      haistelu();
+      break;
+    case 5:
+      kaannos('O');
+      break;
+    case 6:
+      kaannos('V');
+      break;
+    case 7:
+      //ponnistus();
+      break;
+    case 8:
+      istuminen();
+      break;
+    default:
+      alkupose();
+      break;
+  }
+}
+
 void loop() {
-    if(measureDist('E') < 20) kavely();
-    //else kavely();
+    if(measureDist("ve") < 100) {
+      digitalWrite(NN, LOW);
+      kaannos('V');
+      kaannos('V');
+      randomi();
+      delay(5000);
+    }else if(measureDist("oe") < 100){
+      digitalWrite(NN, LOW);
+      kaannos('O');
+      kaannos('O');
+      randomi();
+      delay(5000);
+    }
     else alkupose();
 }
