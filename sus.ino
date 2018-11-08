@@ -68,22 +68,25 @@ void setup() {
 }
 
 //alirutiinit raajoille
-int EY, EK, TY, TK, TA;
+int EY, EK, TY, TK, TA, L;
 
 void etu(char puoli){
   switch(puoli){
     case 'O':
       EY = EOY;
       EK = EOK;
+      L = OL;
       break;
     case 'V':
       EY = EVY;
       EK = EVK;
+      L = VL;
       break;
   }
   digitalWrite(EK, HIGH);
   delay(300/speed);
   digitalWrite(EY, HIGH);
+  digitalWrite(L, HIGH);
   delay(300/speed);
   digitalWrite(EK, LOW);
   delay(300/speed);
@@ -112,7 +115,6 @@ void taka(char puoli){
   digitalWrite(TY, LOW);
   delay(600/speed);
   digitalWrite(TA, LOW);
-  //delay(1500/speed);
   digitalWrite(TK, HIGH);
   delay(200/speed);
   digitalWrite(TY, HIGH);
@@ -122,12 +124,12 @@ void taka(char puoli){
 //kävelysykli
 void kavely(){
   digitalWrite(NN, HIGH);
-  digitalWrite(NK, HIGH);
-  etu('V');  
-  taka('O');
   digitalWrite(NK, LOW);
-  etu('O');
+  etu('V');  
   taka('V');
+  digitalWrite(NK, HIGH);
+  etu('O');
+  taka('O');
 }
 
 //etujalan pakki
@@ -169,13 +171,11 @@ void takaPakki(char puoli){
   digitalWrite(TY, LOW);
   delay(1000/speed);
   digitalWrite(TK, LOW);
-  //delay(2000/speed);
   digitalWrite(TA, HIGH);
   delay(1000/speed);
   digitalWrite(TY, HIGH);
   delay(1000/speed);
   digitalWrite(TA, LOW);
-  //delay(2000/speed);
   digitalWrite(TK, HIGH);
   delay(1000/speed);
 }
@@ -214,12 +214,6 @@ void ponnistus(){
   digitalWrite(TVK, HIGH);
   digitalWrite(TOA, LOW);
   digitalWrite(TVA, LOW);
-}
-
-void kuPo(){          //kumarrus ja ponnistus
-      istuminen();
-      kumarrus();
-      ponnistus();
 }
 
 void haistelu(){
@@ -316,9 +310,6 @@ void randomi(){
       break;
     case 6:
       kaannos('V');
-      break;
-    case 7:
-      //ponnistus();
       break;
     case 8:
       istuminen();
